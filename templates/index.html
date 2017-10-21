@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="..\\style\\w3.css">
+    <script src="..\\script\\angular.min.js"></script>
+    <script src="..\\script\\angular-animate.js"></script>
+</head>
+<body>
+
+<div ng-app="myApp" ng-controller="spamCtrl">
+    <div class="w3-container  w3-margin w3-border">
+        <!--Phần hiển thị thông báo modal-->
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-4">
+                <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('id01').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+                    <h2>Thông báo xác nhận</h2>
+                </header>
+                <div class="w3-container">
+                    <p>{{contentInfo}}</p>
+                </div>
+            </div>
+        </div>
+        <div id="id02" class="w3-modal">
+            <div class="w3-modal-content w3-animate-top w3-card-6">
+                <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('id02').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+                    <h2>Các từ loại bỏ khi train dữ liệu</h2>
+                </header>
+                <div class="w3-container">
+                    <div class="w3-margin">
+                        <p>{{stopword}}</p>
+                    </div>
+                    <div class="w3-margin">
+                        <textarea class="w3-input " rows="3" placeholder="Thêm mới Stop Word ..."
+                                  ng-model="txtStopWord"></textarea>
+                    </div>
+                </div>
+                <footer class="w3-container w3-teal">
+                    <div class="w3-margin">
+                        <button class="w3-button w3-green " ng-click="doUpdateSW()"> Update</button>
+                        <button class="w3-button w3-red " ng-click="doRemoveSW()"> Remove</button>
+                    </div>
+                    <p style="color: red">{{swInfo}}</p>
+                </footer>
+            </div>
+        </div>
+
+        <!--Phần main chương trình-->
+        <div class="w3-margin">
+            <h1> Chương Trình Kiểm Tra Spam SMS</h1>
+        </div>
+        <div class="w3-margin">
+            <textarea class="w3-input w3-border" placeholder="Nhập vào sms để kiểm tra ..."
+                      ng-model="smsText"></textarea>
+        </div>
+
+        <div class="w3-margin">
+            <button class="w3-button w3-red" ng-click="doReviewSW()">System Stop Words</button>
+            <button class="w3-button w3-green" ng-click="doCheck()"> Kiểm tra spam SMS</button>
+        </div>
+        <div class="w3-margin">
+            <table class="w3-table w3-bordered w3-striped">
+                <thead>
+                <th> Nội dung tin</th>
+                <th> Ham/Spam</th>
+                <th> Dự đoán</th>
+                <th> Thao tác</th>
+                </thead>
+                <tbody ng-repeat="x in content">
+                <tr>
+                    <td style="width: 50%">{{x.SpamText}}</td>
+                    <td>{{x.ProOfHam}} % / {{x.ProOfSpam}} %</td>
+                    <td>{{x.Predic}}</td>
+                    <td>
+                        <button class="w3-button w3-white w3-border w3-border-red" ng-click="doAddSpam(x.SpamText)">+
+                            Spam
+                        </button>
+                        <button class="w3-button w3-white w3-border w3-border-blue" ng-click="doAddHam(x.SpamText)">+
+                            Ham
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="..\\script\\sms.js"></script>
+
+</body>
+</html>
